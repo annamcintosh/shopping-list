@@ -9,9 +9,9 @@ const Item = require('../../models/Item');
 //@description all items
 //@access public
 router.get('/', (req, res) => {
-    Item.find()
-        .sort({ date: -1 })
-        .then(items => res.json(items));
+  Item.find()
+    .sort({ date: -1 })
+    .then((items) => res.json(items));
 });
 
 //@route POST api/items
@@ -19,18 +19,18 @@ router.get('/', (req, res) => {
 //@access private
 router.post('/', auth, (req, res) => {
   const newItem = new Item({
-      name: req.body.name
+    name: req.body.name,
   });
-  newItem.save().then(item => res.json(item));
+  newItem.save().then((item) => res.json(item));
 });
 
 //@route POST api/items
 //@description Create a Post
 //@access private
 router.delete('/:id', auth, (req, res) => {
-    Item.findById(req.params.id)
-        .then(item => item.remove().then(() => res.json({success: true})))
-        .catch(err => res.status(404).json({success:false}))
+  Item.findById(req.params.id)
+    .then((item) => item.remove().then(() => res.json({ success: true })))
+    .catch((err) => res.status(404).json({ success: false }));
 });
 
 module.exports = router;
